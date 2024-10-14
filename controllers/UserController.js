@@ -44,7 +44,7 @@ class UserController{
                 }else{
                     res.status(401).json({
                         success: true,
-                        message:  "All fields are required"
+                        message:  "All Fields Are Required"
                     })
 
                 }
