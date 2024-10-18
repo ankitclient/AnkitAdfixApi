@@ -1,9 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require ('mongoose')
 
-// define schema 
-const UserRegisterSchema = mongoose.Schema({
+const AccountentSchema = mongoose.Schema({
+
     name:{
-        type: String,
+        type:String,
         required:true
     },
     email:{
@@ -21,6 +21,6 @@ const UserRegisterSchema = mongoose.Schema({
 
 },{timestamps:true})
 
-const UserRegisterModel = mongoose.model('userRegister',UserRegisterSchema)
+const AccountentModel = mongoose.model('AccountentRegiter',AccountentSchema)
 
-module.exports= UserRegisterModel
+module.exports = AccountentModel
