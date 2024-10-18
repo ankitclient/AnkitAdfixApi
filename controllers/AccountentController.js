@@ -103,6 +103,19 @@ class AccountentController{
         }
 
     }
+    static ViewService = async (req,res)=>{
+        try{
+            const servicedetails = await AddServiceModel.findById(req.params.id)
+            res.status(200).json({
+                success:true,
+                servicedetails
+            })
+            
+
+        }catch(error){
+            console.log(error)
+        }
+    }
 
 
 

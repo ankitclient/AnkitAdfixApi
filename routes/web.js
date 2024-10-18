@@ -13,6 +13,7 @@ router.get('/logout',UserController.Logout)
 router.post('/accountentRegister',AccountentController.AccountentRegister)
 router.post('/addservice',AccountentController.AddService)
 router.get('/displayservices',AccountentController.DisplayServices)
+router.get('/servicedetails/:id',AccountentController.ViewService)
 
 
 
