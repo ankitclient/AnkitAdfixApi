@@ -14,6 +14,7 @@ router.post('/accountentRegister',AccountentController.AccountentRegister)
 router.post('/addservice',AccountentController.AddService)
 router.get('/displayservices',AccountentController.DisplayServices)
 router.get('/servicedetails/:id',AccountentController.ViewService)
+router.get('/servicedelete/:id',AccountentController.ServiceDelete)
 
 
 

@@ -116,6 +116,18 @@ class AccountentController{
             console.log(error)
         }
     }
+    static ServiceDelete = async (req,res)=>{
+        try{
+            await AddServiceModel.findByIdAndDelete(req.params.id)
+            res.status(201).json({
+                success: true,
+                message: "delete successful"
+            })
+
+        }catch(error){
+            console.log(error)
+        }
+    }
 
 
 
