@@ -90,6 +90,20 @@ class AccountentController{
         }
     }
 
+    static DisplayServices = async (req,res)=>{
+        try{
+            const services = await AddServiceModel.find()
+            res.status(200).json({
+                success: true,
+                services
+            })
+
+        }catch(error){
+            console.log(error)
+        }
+
+    }
+
 
 
 }
