@@ -17,6 +17,15 @@ const AddServiceSchema = mongoose.Schema({
     ServiceCharge:{
         type:String,
         required:true
+    },
+    image: {
+        public_id: {
+            type: String
+        },
+
+        url: {
+            type: String
+        }
     }
 
 
