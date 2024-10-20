@@ -5,9 +5,9 @@ const AddServiceModel = require('../models/Accountent/AddServiceModel')
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-    cloud_name: "dkwdscz4l",
-    api_key: "388856688969765",
-    api_secret: "7S0v5WOk8Yw-0QyIr1HjBj1Wifw",
+    cloud_name: "ddpqqd1op",
+    api_key: "563984219451729",
+    api_secret: "IrmvPIhXRVgO1WPXQ5VTjYeRum4",
 });
 
 
