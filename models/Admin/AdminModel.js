@@ -1,9 +1,8 @@
-const mongoose = require ('mongoose')
+const mongoose = require('mongoose')
 
-const AccountentSchema = mongoose.Schema({
-
+const AdminSchema = mongoose.Schema({
     name:{
-        type:String,
+        type: String,
         required:true
     },
     email:{
@@ -21,6 +20,5 @@ const AccountentSchema = mongoose.Schema({
 
 },{timestamps:true})
 
-const AccountentModel = mongoose.model('Accountent',AccountentSchema)
-
-module.exports = AccountentModel
+const AdminModel = mongoose.model('Admin', AdminSchema)
+module.exports = AdminModel

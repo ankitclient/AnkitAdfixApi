@@ -1,9 +1,9 @@
-const mongoose = require ('mongoose')
+const mongoose = require('mongoose')
 
-const AccountentSchema = mongoose.Schema({
+const HrSchema = mongoose.Schema({
 
     name:{
-        type:String,
+        type: String,
         required:true
     },
     email:{
@@ -19,8 +19,8 @@ const AccountentSchema = mongoose.Schema({
         required:true
     }
 
+
 },{timestamps:true})
 
-const AccountentModel = mongoose.model('Accountent',AccountentSchema)
-
-module.exports = AccountentModel
+const HrModel = mongoose.model('Hr', HrSchema)
+module.exports = HrModel
