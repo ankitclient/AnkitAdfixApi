@@ -4,6 +4,7 @@ const AccountentController = require('../controllers/AccountentController')
 const TechnicianController = require('../controllers/TechnicianController')
 const AdminController = require('../controllers/AdminContorller')
 const HrController = require('../controllers/HrController')
+const CrmController = require('../controllers/CrmController')
 const router = express.Router()
 
 // user controller
@@ -28,6 +29,10 @@ router.post('/adminregister',AdminController.AdminRegister)
 
 //Hr Controller
 router.post('/hrregister',HrController.HrRegister)
+
+
+//CrmController
+router.post('/crmregister',CrmController.CrmRegister)
 
 
 module.exports = router
