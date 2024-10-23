@@ -5,6 +5,7 @@ const TechnicianController = require('../controllers/TechnicianController')
 const AdminController = require('../controllers/AdminContorller')
 const HrController = require('../controllers/HrController')
 const CrmController = require('../controllers/CrmController')
+const auth = require('../middleware/auth')
 const router = express.Router()
 
 // user controller
@@ -24,6 +25,7 @@ router.post('/veryfyaccountent',AccountentController.VeryfyAccountent)
 router.post('/addservice',AccountentController.AddService)
 router.get('/displayservices',AccountentController.DisplayServices)
 router.get('/servicedetails/:id',AccountentController.ViewService)
+router.post('/updateservice/:id',AccountentController.UpdateService)
 router.get('/servicedelete/:id',AccountentController.ServiceDelete)
 
 //AdminController

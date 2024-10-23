@@ -126,7 +126,7 @@ class AccountentController{
                 await InsertService.save()
                         res.status(201).json({
                             success: true,
-                            message: "Product Add successfuly",
+                            message: "Services Add successfuly",
                             InsertService
                         })
             }else{
@@ -157,6 +157,40 @@ class AccountentController{
                 success:true,
                 servicedetails
             })
+            
+        }catch(error){
+            console.log(error)
+        }
+    }
+    static UpdateService = async(req,res)=>{
+        try{
+            const {Category, ServiceName, ServiceDescription, ServiceCharge} = req.body
+            // const file = req.files.image;
+            const serImage = await AddServiceModel.findById(req.params.id)
+            const imageid = serImage.image.public_id
+            await cloudinary.uploader.destroy(imageid)
+
+            const image = req.files.image;
+            const myimage = await cloudinary.uploader.upload(image.tempFilePath,{
+                folder: "serviceimage",
+               })
+
+            const data = await AddServiceModel.findByIdAndUpdate(req.parms.id,{
+                Category:Category,
+                ServiceName:ServiceName,
+                ServiceDescription:ServiceDescription,
+                ServiceCharge:ServiceCharge,
+                image: {
+                    public_id: myimage.public_id,
+                    url: myimage.secure_url,
+                },
+            })
+            await data.save()
+                        res.status(201).json({
+                            success: true,
+                            message: "Services Update successfuly",
+                            InsertService
+                        })
             
         }catch(error){
             console.log(error)

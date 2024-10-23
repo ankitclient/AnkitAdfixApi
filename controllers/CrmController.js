@@ -54,6 +54,20 @@ class CrmController{
             console.log(error)
         }
     }
+
+    static ViewProfile = async(req,res)=>{
+        try{
+            const view = await CrmModel.findById(req.params.id)
+            res.status(200).json({
+                success:true,
+                view
+            })
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     static VeryfyCrm = async (req, res)=>{
         try{
            // console.log(req.body)
