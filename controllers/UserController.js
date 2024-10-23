@@ -97,7 +97,7 @@ class UserController {
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })
@@ -112,7 +112,7 @@ class UserController {
     static Logout = async (req, res)=>{
         try{
             res.clearCookie('token')
-            res.status(401).json({
+            res.status(200).json({
                 success: true,
                 message: "Logout Successfuly",
                 
