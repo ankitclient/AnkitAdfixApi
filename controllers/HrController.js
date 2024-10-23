@@ -60,7 +60,7 @@ class HrController{
            const {email, password} = req.body
            if(email && password){
             
-            const hr = await UserRegisterModel.findOne({email:email})
+            const hr = await HrModel.findOne({email:email})
             if(hr != null){
 
                 const ismatched = await bcrypt.compare(password,hr.password)
