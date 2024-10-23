@@ -10,7 +10,6 @@ cloudinary.config({
     api_secret: "IrmvPIhXRVgO1WPXQ5VTjYeRum4",
 });
 
-
 class AccountentController{
     static AccountentRegister = async(req,res)=>{
         try {
