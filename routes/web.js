@@ -14,11 +14,13 @@ router.get('/logout',UserController.Logout)
 
 // Tchnician Controller
 router.post('/technicianregister',TechnicianController.RegisterTechnician)
+router.post('/technicianveryfy',TechnicianController.TechnicianVeryfy)
 
 
 
 //AccountentController
 router.post('/accountentRegister',AccountentController.AccountentRegister)
+router.post('/veryfyaccountent',AccountentController.VeryfyAccountent)
 router.post('/addservice',AccountentController.AddService)
 router.get('/displayservices',AccountentController.DisplayServices)
 router.get('/servicedetails/:id',AccountentController.ViewService)
@@ -26,13 +28,16 @@ router.get('/servicedelete/:id',AccountentController.ServiceDelete)
 
 //AdminController
 router.post('/adminregister',AdminController.AdminRegister)
+router.post('/veryfyadmin',AdminController.Veryfyadmin)
 
 //Hr Controller
 router.post('/hrregister',HrController.HrRegister)
+router.post('/veryfyhr',HrController.VeryfyHr)
 
 
 //CrmController
 router.post('/crmregister',CrmController.CrmRegister)
+router.post('/veryfycrm',CrmController.VeryfyCrm)
 
 
 module.exports = router

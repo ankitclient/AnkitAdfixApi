@@ -28,7 +28,7 @@ class UserController {
 
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -72,7 +72,7 @@ class UserController {
                     const token = jwt.sign({id:user._id}, 'ankityadav123')
                    // console.log(token)
                    res.cookie('token',token)
-                   res.status(401).json({
+                   res.status(200).json({
                     success: true,
                     message:  "login successfully",
                     token: token,

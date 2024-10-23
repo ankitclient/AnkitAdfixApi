@@ -59,6 +59,58 @@ class TechnicianController{
         }
    
     }
+    static TechnicianVeryfy = async (req, res)=>{
+        try{
+           // console.log(req.body)
+           const {email, password} = req.body
+           if(email && password){
+            
+            const technician = await TechnicianModel.findOne({email:email})
+            if(technician != null){
+
+                const ismatched = await bcrypt.compare(password,technician.password)
+
+                if(ismatched){
+                    //generate jwt
+                    const token = jwt.sign({id:technician._id}, 'technician123')
+                   // console.log(token)
+                   res.cookie('token',token)
+                   res.status(200).json({
+                    success: true,
+                    message:  "login successfully",
+                    token: token,
+                    technician,
+
+                })
+
+
+                }else{
+
+                    res.status(401).json({
+                        success: true,
+                        message:  "Email or password does not matched"
+                    })
+                }
+
+            }else{
+                res.status(401).json({
+                    success: true,
+                    message:  "You are not registered"
+                })
+            }
+
+           }else{
+            res.status(401).json({
+                success: true,
+                message:  "All fields are required"
+            })
+
+           }
+
+        }catch(error){
+            console.log(error)
+        }
+    }
 
 
 

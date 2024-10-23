@@ -32,7 +32,7 @@ class HrController{
                             password: hashpassword
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(200).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -51,6 +51,68 @@ class HrController{
                 }
             }
         } catch (error) {
+            console.log(error)
+        }
+    }
+    static VeryfyHr = async (req, res)=>{
+        try{
+           // console.log(req.body)
+           const {email, password} = req.body
+           if(email && password){
+            
+            const hr = await UserRegisterModel.findOne({email:email})
+            if(hr != null){
+
+                const ismatched = await bcrypt.compare(password,hr.password)
+
+                if(ismatched){
+                    //generate jwt
+                    const token = jwt.sign({id:hr._id}, 'ankityadav123')
+                   // console.log(token)
+                   res.cookie('token',token)
+                   res.status(401).json({
+                    success: true,
+                    message:  "login successfully",
+                    token: token,
+                    hr,
+
+                })
+                }else{
+
+                    res.status(401).json({
+                        success: true,
+                        message:  "Email or password does not matched"
+                    })
+                }
+
+            }else{
+                res.status(401).json({
+                    success: true,
+                    message:  "You are not registered"
+                })
+            }
+
+           }else{
+            res.status(401).json({
+                success: true,
+                message:  "All fields are required"
+            })
+
+           }
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+    static Logout = async (req, res)=>{
+        try{
+            res.clearCookie('token')
+            res.status(401).json({
+                success: true,
+                message: "Logout Successfuly",
+                
+            })
+        }catch(error){
             console.log(error)
         }
     }
