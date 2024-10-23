@@ -18,7 +18,7 @@ class TechnicianController{
             const { name, email, mobile,age, password,work, workingtime,confirmpassword } = req.body
             const technician = await TechnicianModel.findOne({ email: email })
             if (technician) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -36,7 +36,7 @@ class TechnicianController{
                             workingtime:workingtime
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -48,7 +48,7 @@ class TechnicianController{
                         })
                     }
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })
@@ -100,7 +100,7 @@ class TechnicianController{
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })

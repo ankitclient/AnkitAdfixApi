@@ -17,7 +17,7 @@ class CrmController{
             const { name, email, mobile, password, confirmpassword } = req.body
             const user = await CrmModel.findOne({ email: email })
             if (user) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -32,7 +32,7 @@ class CrmController{
                             password: hashpassword
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -44,7 +44,7 @@ class CrmController{
                         })
                     }
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })
@@ -93,7 +93,7 @@ class CrmController{
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })

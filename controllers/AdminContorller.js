@@ -17,7 +17,7 @@ class AdminController{
             const { name, email, mobile, password, confirmpassword } = req.body
             const admin = await AdminModel.findOne({ email: email })
             if (admin) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -32,7 +32,7 @@ class AdminController{
                             password: hashpassword
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -44,7 +44,7 @@ class AdminController{
                         })
                     }
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })
@@ -94,7 +94,7 @@ class AdminController{
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })

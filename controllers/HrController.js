@@ -17,7 +17,7 @@ class HrController{
             const { name, email, mobile, password, confirmpassword } = req.body
             const user = await HrModel.findOne({ email: email })
             if (user) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -32,7 +32,7 @@ class HrController{
                             password: hashpassword
                         })
                         await register.save()
-                        res.status(200).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -44,7 +44,7 @@ class HrController{
                         })
                     }
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })
@@ -70,7 +70,7 @@ class HrController{
                     const token = jwt.sign({id:hr._id}, 'ankityadav123')
                    // console.log(token)
                    res.cookie('token',token)
-                   res.status(401).json({
+                   res.status(200).json({
                     success: true,
                     message:  "login successfully",
                     token: token,
@@ -93,7 +93,7 @@ class HrController{
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })
@@ -107,7 +107,7 @@ class HrController{
     static Logout = async (req, res)=>{
         try{
             res.clearCookie('token')
-            res.status(401).json({
+            res.status(200).json({
                 success: true,
                 message: "Logout Successfuly",
                 

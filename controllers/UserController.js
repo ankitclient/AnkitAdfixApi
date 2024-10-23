@@ -10,7 +10,7 @@ class UserController {
             const user = await UserRegisterModel.findOne({ email: email })
 
             if (user) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -42,7 +42,7 @@ class UserController {
                     }
 
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })

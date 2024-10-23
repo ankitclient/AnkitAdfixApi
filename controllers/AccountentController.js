@@ -17,7 +17,7 @@ class AccountentController{
             const { name, email, mobile, password, confirmpassword } = req.body
             const user = await AccountentModel.findOne({ email: email })
             if (user) {
-                res.status(401).json({
+                res.status(409).json({
                     success: true,
                     message: "Email already exist"
                 })
@@ -32,7 +32,7 @@ class AccountentController{
                             password: hashpassword
                         })
                         await register.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Registration successfuly",
                             register
@@ -44,7 +44,7 @@ class AccountentController{
                         })
                     }
                 } else {
-                    res.status(401).json({
+                    res.status(400).json({
                         success: true,
                         message: "All Fields Are Required"
                     })
@@ -93,7 +93,7 @@ class AccountentController{
             }
 
            }else{
-            res.status(401).json({
+            res.status(400).json({
                 success: true,
                 message:  "All fields are required"
             })
@@ -125,13 +125,13 @@ class AccountentController{
                     },
                 })
                 await InsertService.save()
-                        res.status(401).json({
+                        res.status(201).json({
                             success: true,
                             message: "Product Add successfuly",
                             InsertService
                         })
             }else{
-                res.status(401).json({
+                res.status(400).json({
                     success:true,
                     message:"Category and Service Name Fields Are Required"
                 })
@@ -166,7 +166,7 @@ class AccountentController{
     static ServiceDelete = async (req,res)=>{
         try{
             await AddServiceModel.findByIdAndDelete(req.params.id)
-            res.status(201).json({
+            res.status(200).json({
                 success: true,
                 message: "delete successful"
             })
