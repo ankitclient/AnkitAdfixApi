@@ -17,8 +17,6 @@ router.get('/logout',UserController.Logout)
 router.post('/technicianregister',TechnicianController.RegisterTechnician)
 router.post('/technicianveryfy',TechnicianController.TechnicianVeryfy)
 
-
-
 //AccountentController
 router.post('/accountentRegister',AccountentController.AccountentRegister)
 router.post('/veryfyaccountent',AccountentController.VeryfyAccountent)

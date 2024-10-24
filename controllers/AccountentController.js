@@ -106,14 +106,9 @@ class AccountentController{
     static AddService = async(req,res)=>{
         try{
             const {Category, ServiceName, ServiceDescription, ServiceCharge} = req.body
-           
-            const ImgId = await AddServiceModel.findById(req.params.id);
-            const imageid = ImgId.image.public_id;
-            await cloudinary.uploader.destroy(imageid);
-
             const file = req.files.image;
             // console.log(file)
-            const serviceImage = await cloudinary.uploader.upload(file.tempFilePath, {
+            const serviceimage = await cloudinary.uploader.upload(file.tempFilePath, {
                 folder: "serviceimage",
             });
                 
@@ -124,8 +119,8 @@ class AccountentController{
                     ServiceDescription:ServiceDescription,
                     ServiceCharge:ServiceCharge,
                     image: {
-                        public_id: serviceImage.public_id,
-                        url: serviceImage.secure_url,
+                        public_id: serviceimage.public_id,
+                        url: serviceimage.secure_url,
                     },
                 })
                 await InsertService.save()
@@ -168,36 +163,12 @@ class AccountentController{
         }
     }
     static UpdateService = async(req,res)=>{
-        try{
-            const {Category, ServiceName, ServiceDescription, ServiceCharge} = req.body
-            // const file = req.files.image;
-            const serImage = await AddServiceModel.findById(req.params.id)
-            const imageid = serImage.image.public_id
-            await cloudinary.uploader.destroy(imageid)
-            const image = req.files.image;
-            const myimage = await cloudinary.uploader.upload(image.tempFilePath,{
-                folder: "serviceimage",
-               })
-            const data = await AddServiceModel.findByIdAndUpdate(req.parms.id,{
-                Category:Category,
-                ServiceName:ServiceName,
-                ServiceDescription:ServiceDescription,
-                ServiceCharge:ServiceCharge,
-                image: {
-                    public_id: myimage.public_id,
-                    url: myimage.secure_url,
-                },
-            })
-            await data.save()
-                        res.status(201).json({
-                            success: true,
-                            message: "Services Update successfuly",
-                            data
-                        })
-            
-        }catch(error){
-            console.log(error)
-        }
+       try{
+         console.log('this is Update')
+
+       }catch(error){
+        console.log(error)
+       }
     }
     static ServiceDelete = async (req,res)=>{
         try{
