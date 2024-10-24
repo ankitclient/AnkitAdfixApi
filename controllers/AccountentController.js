@@ -169,7 +169,7 @@ class AccountentController{
             const serImage = await AddServiceModel.findById(req.params.id)
             const imageid = serImage.image.public_id
             console.log(imageid)
-            // await cloudinary.uploader.destroy(imageid)
+            await cloudinary.uploader.destroy(imageid)
 
             const image = req.files.image;
             const myimage = await cloudinary.uploader.upload(image.tempFilePath,{
