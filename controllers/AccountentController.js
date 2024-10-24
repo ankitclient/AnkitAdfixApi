@@ -10,8 +10,8 @@ cloudinary.config({
     api_secret: "IrmvPIhXRVgO1WPXQ5VTjYeRum4",
 });
 
-class AccountentController{
-    static AccountentRegister = async(req,res)=>{
+class AccountentController {
+    static AccountentRegister = async (req, res) => {
         try {
             const { name, email, mobile, password, confirmpassword } = req.body
             const user = await AccountentModel.findOne({ email: email })
@@ -53,131 +53,126 @@ class AccountentController{
             console.log(error)
         }
     }
-    static VeryfyAccountent = async (req, res)=>{
-        try{
-           // console.log(req.body)
-           const {email, password} = req.body
-           if(email && password){
-            
-            const accountent = await AccountentModel.findOne({email:email})
-            if(accountent != null){
+    static VeryfyAccountent = async (req, res) => {
+        try {
+            // console.log(req.body)
+            const { email, password } = req.body
+            if (email && password) {
 
-                const ismatched = await bcrypt.compare(password,accountent.password)
+                const accountent = await AccountentModel.findOne({ email: email })
+                if (accountent != null) {
 
-                if(ismatched){
-                    //generate jwt
-                    const token = jwt.sign({id:accountent._id}, 'ankityadav123')
-                   // console.log(token)
-                   res.cookie('token',token)
-                   res.status(200).json({
-                    success: true,
-                    message:  "login successfully",
-                    token: token,
-                    accountent,
+                    const ismatched = await bcrypt.compare(password, accountent.password)
 
-                })
-                }else{
+                    if (ismatched) {
+                        //generate jwt
+                        const token = jwt.sign({ id: accountent._id }, 'ankityadav123')
+                        // console.log(token)
+                        res.cookie('token', token)
+                        res.status(200).json({
+                            success: true,
+                            message: "login successfully",
+                            token: token,
+                            accountent,
 
+                        })
+                    } else {
+
+                        res.status(401).json({
+                            success: true,
+                            message: "Email or password does not matched"
+                        })
+                    }
+
+                } else {
                     res.status(401).json({
                         success: true,
-                        message:  "Email or password does not matched"
+                        message: "You are not registered"
                     })
                 }
 
-            }else{
-                res.status(401).json({
+            } else {
+                res.status(400).json({
                     success: true,
-                    message:  "You are not registered"
+                    message: "All fields are required"
                 })
+
             }
 
-           }else{
-            res.status(400).json({
-                success: true,
-                message:  "All fields are required"
-            })
-
-           }
-
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
-    static AddService = async(req,res)=>{
-        try{
-            const {Category, ServiceName, ServiceDescription, ServiceCharge} = req.body
+    static AddService = async (req, res) => {
+        try {
+            const { Category, ServiceName, ServiceDescription, ServiceCharge } = req.body
             const file = req.files.image;
             // console.log(file)
             const serviceimage = await cloudinary.uploader.upload(file.tempFilePath, {
                 folder: "serviceimage",
             });
-                
-            if(Category && ServiceName){
+
+            if (Category && ServiceName) {
                 const InsertService = await AddServiceModel({
-                    Category:Category,
-                    ServiceName:ServiceName,
-                    ServiceDescription:ServiceDescription,
-                    ServiceCharge:ServiceCharge,
+                    Category: Category,
+                    ServiceName: ServiceName,
+                    ServiceDescription: ServiceDescription,
+                    ServiceCharge: ServiceCharge,
                     image: {
                         public_id: serviceimage.public_id,
                         url: serviceimage.secure_url,
                     },
                 })
                 await InsertService.save()
-                        res.status(201).json({
-                            success: true,
-                            message: "Services Add successfuly",
-                            InsertService
-                        })
-            }else{
+                res.status(201).json({
+                    success: true,
+                    message: "Services Add successfuly",
+                    InsertService
+                })
+            } else {
                 res.status(400).json({
-                    success:true,
-                    message:"Category and Service Name Fields Are Required"
+                    success: true,
+                    message: "Category and Service Name Fields Are Required"
                 })
             }
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
-    static DisplayServices = async (req,res)=>{
-        try{
+    static DisplayServices = async (req, res) => {
+        try {
             const services = await AddServiceModel.find()
             res.status(200).json({
                 success: true,
                 services
             })
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
-    static ViewService = async (req,res)=>{
-        try{
+    static ViewService = async (req, res) => {
+        try {
             const servicedetails = await AddServiceModel.findById(req.params.id)
             res.status(200).json({
-                success:true,
+                success: true,
                 servicedetails
             })
-            
-        }catch(error){
+
+        } catch (error) {
             console.log(error)
         }
     }
-    static UpdateService = async(req,res)=>{
-       try{
-         console.log('this is Update')
-
-       }catch(error){
-        console.log(error)
-       }
+    static UpdateService = async (req, res) => {
+        
     }
-    static ServiceDelete = async (req,res)=>{
-        try{
+    static ServiceDelete = async (req, res) => {
+        try {
             await AddServiceModel.findByIdAndDelete(req.params.id)
             res.status(200).json({
                 success: true,
                 message: "delete successful"
             })
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
