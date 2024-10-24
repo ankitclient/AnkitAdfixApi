@@ -106,9 +106,14 @@ class AccountentController{
     static AddService = async(req,res)=>{
         try{
             const {Category, ServiceName, ServiceDescription, ServiceCharge} = req.body
+           
+            const ImgId = await AddServiceModel.findById(req.params.id);
+            const imageid = ImgId.image.public_id;
+            await cloudinary.uploader.destroy(imageid);
+
             const file = req.files.image;
             // console.log(file)
-            const serviceimage = await cloudinary.uploader.upload(file.tempFilePath, {
+            const serviceImage = await cloudinary.uploader.upload(file.tempFilePath, {
                 folder: "serviceimage",
             });
                 
@@ -119,8 +124,8 @@ class AccountentController{
                     ServiceDescription:ServiceDescription,
                     ServiceCharge:ServiceCharge,
                     image: {
-                        public_id: serviceimage.public_id,
-                        url: serviceimage.secure_url,
+                        public_id: serviceImage.public_id,
+                        url: serviceImage.secure_url,
                     },
                 })
                 await InsertService.save()
