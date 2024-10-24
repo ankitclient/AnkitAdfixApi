@@ -168,29 +168,30 @@ class AccountentController{
             // const file = req.files.image;
             const serImage = await AddServiceModel.findById(req.params.id)
             const imageid = serImage.image.public_id
-            await cloudinary.uploader.destroy(imageid)
+            console.log(imageid)
+            // await cloudinary.uploader.destroy(imageid)
 
             const image = req.files.image;
             const myimage = await cloudinary.uploader.upload(image.tempFilePath,{
                 folder: "serviceimage",
                })
 
-            const data = await AddServiceModel.findByIdAndUpdate(req.parms.id,{
-                Category:Category,
-                ServiceName:ServiceName,
-                ServiceDescription:ServiceDescription,
-                ServiceCharge:ServiceCharge,
-                image: {
-                    public_id: myimage.public_id,
-                    url: myimage.secure_url,
-                },
-            })
-            await data.save()
-                        res.status(201).json({
-                            success: true,
-                            message: "Services Update successfuly",
-                            InsertService
-                        })
+            // const data = await AddServiceModel.findByIdAndUpdate(req.parms.id,{
+            //     Category:Category,
+            //     ServiceName:ServiceName,
+            //     ServiceDescription:ServiceDescription,
+            //     ServiceCharge:ServiceCharge,
+            //     image: {
+            //         public_id: myimage.public_id,
+            //         url: myimage.secure_url,
+            //     },
+            // })
+            // await data.save()
+            //             res.status(201).json({
+            //                 success: true,
+            //                 message: "Services Update successfuly",
+            //                 data
+            //             })
             
         }catch(error){
             console.log(error)
