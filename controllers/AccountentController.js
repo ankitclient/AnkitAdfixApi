@@ -118,8 +118,8 @@ class AccountentController {
                     ServiceName: ServiceName,
                     ServiceDescription: ServiceDescription,
                     ServiceCharge: ServiceCharge,
-                    Rating:Rating,
-                    Reviews:Reviews,
+                    Rating: Rating,
+                    Reviews: Reviews,
                     image: {
                         public_id: serviceimage.public_id,
                         url: serviceimage.secure_url,
@@ -152,6 +152,18 @@ class AccountentController {
             console.log(error)
         }
     }
+    static DisplayCategoryWise = async (req, res) => {
+        try {
+            const Category  = req.params.id
+            const services = await AddServiceModel.find({Category:Category})
+            res.status(200).json({
+                success: true,
+                services
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
     static ViewService = async (req, res) => {
         try {
             const servicedetails = await AddServiceModel.findById(req.params.id)
@@ -165,7 +177,7 @@ class AccountentController {
         }
     }
     static UpdateService = async (req, res) => {
-        
+
     }
     static ServiceDelete = async (req, res) => {
         try {
