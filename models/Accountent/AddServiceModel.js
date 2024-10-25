@@ -18,6 +18,12 @@ const AddServiceSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    Rating:{
+        type:String,
+    },
+    Reviews:{
+        type:String,
+    },
     image: {
         public_id: {
             type: String
