@@ -105,7 +105,7 @@ class AccountentController {
     }
     static AddService = async (req, res) => {
         try {
-            const { Category, ServiceName, ServiceDescription, ServiceCharge,Rating,Reviews } = req.body
+            const { Category, ServiceName, ServiceDescription, ServiceCharge, Rating, Reviews } = req.body
             const file = req.files.image;
             // console.log(file)
             const serviceimage = await cloudinary.uploader.upload(file.tempFilePath, {
