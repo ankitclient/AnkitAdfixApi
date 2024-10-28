@@ -177,7 +177,40 @@ class AccountentController {
         }
     }
     static UpdateService = async (req, res) => {
+        try{
+            const servicedata = await AddServiceModel.findById(req.params.id)
+            const imgId = servicedata.image.public_id
+            await cloudinary.uploader.destroy(imgId)
 
+            const file = req.files.image;
+            // console.log(file)
+            const serviceimage = await cloudinary.uploader.upload(file.tempFilePath, {
+                folder: "serviceimage",
+            });
+
+            const { Category, ServiceName, ServiceDescription, ServiceCharge, Rating, Reviews } = req.body
+            const result = await AddServiceModel.findByIdAndUpdate(req.params.id,{
+                Category: Category,
+                ServiceName: ServiceName,
+                ServiceDescription: ServiceDescription,
+                ServiceCharge: ServiceCharge,
+                Rating: Rating,
+                Reviews: Reviews,
+                image: {
+                    public_id: serviceimage.public_id,
+                    url: serviceimage.secure_url,
+                },
+            })
+            await result.save()
+                res.status(201).json({
+                    success: true,
+                    message: "Service Update successfuly",
+                    result
+                })
+            
+        }catch(error){
+            console.log(error)
+        }
     }
     static ServiceDelete = async (req, res) => {
         try {
