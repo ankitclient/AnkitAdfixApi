@@ -261,5 +261,17 @@ class AccountentController {
             console.log(error)
         }
     }
+    static DisplayHTW = async(req,res)=>{
+        try {
+            const ServiceName  = req.params.id
+            const HTWData = await AddServiceModel.find({ServiceName:ServiceName})
+            res.status(200).json({
+                success: true,
+                HTWData
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 module.exports = AccountentController
