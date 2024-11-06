@@ -26,6 +26,7 @@ router.get('/displaycategorywise/:id',AccountentController.DisplayCategoryWise)
 router.get('/servicedetails/:id',AccountentController.ViewService)
 router.post('/updateservice/:id',AccountentController.UpdateService)
 router.get('/servicedelete/:id',AccountentController.ServiceDelete)
+router.post('/inserthowtowork',AccountentController.HowToWorkInsert)
 
 //AdminController
 router.post('/adminregister',AdminController.AdminRegister)

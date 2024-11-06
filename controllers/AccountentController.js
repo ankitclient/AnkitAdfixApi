@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const AccountentModel = require('../models/Accountent/AccountentModel')
-const AddServiceModel = require('../models/Accountent/AddServiceModel')
+const AddServiceModel = require('../models/Accountent/AddServiceModel');
+const HowToworkModel = require('../models/Accountent/HowToWorkModel');
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -189,6 +190,7 @@ class AccountentController {
             });
 
             const { Category, ServiceName, ServiceDescription, ServiceCharge, Rating, Reviews } = req.body
+            
             const result = await AddServiceModel.findByIdAndUpdate(req.params.id,{
                 Category: Category,
                 ServiceName: ServiceName,
@@ -219,6 +221,42 @@ class AccountentController {
                 success: true,
                 message: "delete successful"
             })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    static HowToWorkInsert = async(req,res)=>{
+        try {
+            const { Category, ServiceName, Title, Description} = req.body
+            const file = req.files.image;
+            // console.log(file)
+            const Htwimage = await cloudinary.uploader.upload(file.tempFilePath, {
+                folder: "serviceimage",
+            });
+
+            if (Category && ServiceName && file && Title && Description) {
+                const InsertHTW = await HowToworkModel({
+                    Category: Category,
+                    ServiceName: ServiceName,
+                    Title: Title,
+                    Description: Description,
+                    image: {
+                        public_id: Htwimage.public_id,
+                        url: Htwimage.secure_url,
+                    },
+                })
+                await InsertHTW.save()
+                res.status(201).json({
+                    success: true,
+                    message: "How to work Add successfuly",
+                    InsertService
+                })
+            } else {
+                res.status(400).json({
+                    success: true,
+                    message: "All Fields Are Required"
+                })
+            }
         } catch (error) {
             console.log(error)
         }
