@@ -248,13 +248,13 @@ class AccountentController {
                 await InsertHTW.save()
                 res.status(201).json({
                     success: true,
-                    message: "How to work Add successfuly",
-                    InsertService
+                    message: "Data  Add successfuly",
+                    InsertHTW
                 })
             } else {
                 res.status(400).json({
                     success: true,
-                    message: "All Fields Are Required"
+                    message: " All Fields Are Required "
                 })
             }
         } catch (error) {
