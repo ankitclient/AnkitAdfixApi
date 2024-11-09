@@ -264,7 +264,7 @@ class AccountentController {
     static DisplayHTW = async(req,res)=>{
         try {
             const ServiceName  = req.params.id
-            const HTWData = await AddServiceModel.find({ServiceName:ServiceName})
+            const HTWData = await HowToworkModel.find({ServiceName:ServiceName})
             res.status(200).json({
                 success: true,
                 HTWData
