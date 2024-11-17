@@ -155,8 +155,8 @@ class AccountentController {
     }
     static DisplayCategoryWise = async (req, res) => {
         try {
-            const Category  = req.params.id
-            const services = await AddServiceModel.find({Category:Category})
+            const Category = req.params.id
+            const services = await AddServiceModel.find({ Category: Category })
             res.status(200).json({
                 success: true,
                 services
@@ -178,7 +178,7 @@ class AccountentController {
         }
     }
     static UpdateService = async (req, res) => {
-        try{
+        try {
             const servicedata = await AddServiceModel.findById(req.params.id)
             const imgId = servicedata.image.public_id
             await cloudinary.uploader.destroy(imgId)
@@ -190,8 +190,8 @@ class AccountentController {
             });
 
             const { Category, ServiceName, ServiceDescription, ServiceCharge, Rating, Reviews } = req.body
-            
-            const result = await AddServiceModel.findByIdAndUpdate(req.params.id,{
+
+            const result = await AddServiceModel.findByIdAndUpdate(req.params.id, {
                 Category: Category,
                 ServiceName: ServiceName,
                 ServiceDescription: ServiceDescription,
@@ -204,13 +204,13 @@ class AccountentController {
                 },
             })
             await result.save()
-                res.status(201).json({
-                    success: true,
-                    message: "Service Update successfuly",
-                    result
-                })
-            
-        }catch(error){
+            res.status(201).json({
+                success: true,
+                message: "Service Update successfuly",
+                result
+            })
+
+        } catch (error) {
             console.log(error)
         }
     }
@@ -225,46 +225,79 @@ class AccountentController {
             console.log(error)
         }
     }
-    static HowToWorkInsert = async(req,res)=>{
+    
+    static HowToWorkInsert = async (req, res) => {
         try {
-            const { Category, ServiceName, Title, Description} = req.body
-            const file = req.files.image;
-            // console.log(file)
-            const Htwimage = await cloudinary.uploader.upload(file.tempFilePath, {
-                folder: "serviceimage",
-            });
-
-            if (Category && ServiceName && file && Title && Description) {
-                const InsertHTW = await HowToworkModel({
-                    Category: Category,
-                    ServiceName: ServiceName,
-                    Title: Title,
-                    Description: Description,
-                    image: {
-                        public_id: Htwimage.public_id,
-                        url: Htwimage.secure_url,
-                    },
-                })
-                await InsertHTW.save()
-                res.status(201).json({
-                    success: true,
-                    message: "Data  Add successfuly",
-                    InsertHTW
-                })
-            } else {
-                res.status(400).json({
-                    success: true,
-                    message: " All Fields Are Required "
-                })
+            const { ServiceName, ServicesCategory, HToWorks } = req.body;
+            console.log("Request Body:", req.body);
+            // Validate input
+            if (!ServiceName || !ServicesCategory || !HToWorks || !Array.isArray(HToWorks)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "ServiceName, ServicesCategory, and HToWorks (array) are required.",
+                });
             }
+    
+            const uploadedHToWorks = [];
+    
+            // Log to debug
+            console.log("HToWorks:", HToWorks);
+    
+            // Upload HToWorks
+            for (const HToWork of HToWorks) {
+                const { title, description, image } = HToWork;
+    
+                if (!title || !description || !image) {
+                    return res.status(400).json({
+                        success: false,
+                        message: "Each HToWork must have a title, description, and image.",
+                    });
+                }
+    
+                const uploadedImage = await cloudinary.uploader.upload(image.tempFilePath, {
+                    folder: "HToWorkimages",
+                });
+    
+                uploadedHToWorks.push({
+                    title,
+                    description,
+                    image: {
+                        public_id: uploadedImage.public_id,
+                        url: uploadedImage.secure_url,
+                    },
+                });
+            }
+    
+            // Save the new service
+            const newService = new HowToworkModel({
+                ServiceName,
+                ServicesCategory,
+                HToWorks: uploadedHToWorks,
+            });
+    
+            await newService.save();
+    
+            res.status(201).json({
+                success: true,
+                message: "Service added successfully",
+                data: newService,
+            });
         } catch (error) {
-            console.log(error)
+            console.error("Error adding service:", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error",
+                error: error.message,
+            });
         }
-    }
-    static DisplayHTW = async(req,res)=>{
+    };
+    
+
+
+    static DisplayHTW = async (req, res) => {
         try {
-            const ServiceName  = req.params.id
-            const HTWData = await HowToworkModel.find({ServiceName:ServiceName})
+            const ServiceName = req.params.id
+            const HTWData = await HowToworkModel.find({ ServiceName: ServiceName })
             res.status(200).json({
                 success: true,
                 HTWData
@@ -275,3 +308,6 @@ class AccountentController {
     }
 }
 module.exports = AccountentController
+
+
+

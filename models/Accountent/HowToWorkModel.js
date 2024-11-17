@@ -1,34 +1,33 @@
 const mongoose = require('mongoose')
 
 const HowtoWorkSchema = mongoose.Schema({
-    Category:{
-        type:String,
-        required:true
+    ServiceName: {
+        type: String, required: true
     },
-    ServiceName:{
-        type:String,
-        required:true
+    ServicesCategory: {
+        type: String, required: true
     },
-    Title:{
-        type:String,
-        required:true
-    },
-    Description:{
-        type: String,
-        required:true
-    },
-    image: {
-        public_id: {
-            type: String
+    HToWorks: [
+        {
+            title: {
+                type: String, required: true
+            },
+            description: {
+                type: String, required: true
+            },
+            image: {
+                public_id: {
+                    type: String, required: true
+                },
+                url: {
+                    type: String, required: true
+                },
+            },
         },
+    ],
 
-        url: {
-            type: String
-        }
-    }
+}, { timestamps: true })
 
-},{timestamps:true})
-
-const HowToworkModel = mongoose.model('ServiceHowToWork',HowtoWorkSchema)
+const HowToworkModel = mongoose.model('ServiceHowToWork', HowtoWorkSchema)
 
 module.exports = HowToworkModel
